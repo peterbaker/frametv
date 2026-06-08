@@ -1,0 +1,4 @@
+# The maintained library is what adds 2022+/2024 Frame TV art-mode support.
+# Older vendored copies only speak the 2020/2021 protocol.
+# Install with: python3 -m pip install -r requirements.txt
+samsungtvws[websocket]>=3.0

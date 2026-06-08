@@ -26,10 +26,23 @@ else:
 logging.basicConfig(level=logging.INFO)
 
 # Set your TVs local IP address. Highly recommend using a static IP address for your TV.
-tv = SamsungTVWS('192.168.0.230')
+tv_ip = '192.168.0.230'
 
-# Checks if the TV supports art mode
-art_mode = tv.art().supported()
+# 2022+ Frame TVs (including 2024) require an authenticated secure websocket:
+# port 8002 + a persisted token (the TV shows a one-time "Allow" prompt on the
+# first connection). 2020/2021 Frames work over this path too, so we try it
+# first and fall back to the original port-8001 connection if it fails — keeping
+# the known-good route for older models intact.
+token_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tv-token.txt')
+
+try:
+	tv = SamsungTVWS(host=tv_ip, port=8002, token_file=token_file, timeout=30, name='ArtUploader')
+	art_mode = tv.art().supported()  # forces the secure handshake so fallback can trigger
+except Exception as e:
+	logging.warning('Secure (8002) connection failed (%s); falling back to legacy 8001.', e)
+	tv = SamsungTVWS(tv_ip)
+	# Checks if the TV supports art mode
+	art_mode = tv.art().supported()
 
 if art_mode == True:
 	# Retrieve information about the currently selected art
