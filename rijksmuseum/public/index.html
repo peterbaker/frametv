@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frame TV · Rijksmuseum Art Picker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Rijksmuseum Art Picker</h1>
+    <p>Search the collection, pick the works you want, download them into <code>images/</code>.</p>
+  </header>
+
+  <form id="search-form">
+    <div class="fields">
+      <label>Type <input name="type" value="painting" placeholder="painting" /></label>
+      <label>Title <input name="title" value="landschap" placeholder="landschap" /></label>
+      <label>Creator <input name="creator" placeholder="Rembrandt van Rijn" /></label>
+      <label>Material <input name="material" placeholder="oil paint" /></label>
+      <label>Technique <input name="technique" placeholder="" /></label>
+      <label>Date <input name="creationDate" placeholder="16??" /></label>
+      <label>Description <input name="description" placeholder="" /></label>
+      <label>Object # <input name="objectNumber" placeholder="SK-C-5" /></label>
+    </div>
+    <div class="actions">
+      <button type="submit">Search</button>
+      <span id="status" class="status"></span>
+    </div>
+  </form>
+
+  <div class="toolbar">
+    <button id="select-all" type="button" hidden>Select all</button>
+    <button id="clear-sel" type="button" hidden>Clear</button>
+    <button id="download" type="button" disabled>Download selected → images/</button>
+  </div>
+
+  <div id="grid" class="grid"></div>
+
+  <div class="toolbar">
+    <button id="load-more" type="button" hidden>Load more</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
