@@ -26,7 +26,7 @@ else:
 logging.basicConfig(level=logging.INFO)
 
 # Set your TVs local IP address. Highly recommend using a static IP address for your TV.
-tv = SamsungTVWS('192.168.0.227')
+tv = SamsungTVWS('192.168.0.230')
 
 # Checks if the TV supports art mode
 art_mode = tv.art().supported()
