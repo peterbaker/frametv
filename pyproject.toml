@@ -1,0 +1,14 @@
+[project]
+name = "frame-tv-art"
+version = "0.2.0"
+description = "Rotate Rijksmuseum artwork on a Samsung Frame TV's Art Mode."
+requires-python = ">=3.11"
+dependencies = [
+    "samsungtvws>=2.6,<4",
+    "pillow>=10",
+    "requests>=2.31",
+    "python-dotenv>=1.0",
+]
+
+[tool.uv]
+package = false

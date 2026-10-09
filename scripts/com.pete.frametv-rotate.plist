@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LaunchAgent: rotate the Frame TV artwork once a day at 09:00.
+
+  Install:
+      cp scripts/com.pete.frametv-rotate.plist ~/Library/LaunchAgents/
+      # Edit the copy: replace {{REPO}} with the absolute path to this repo
+      # (LaunchAgents do not expand ~ or env vars)
+      launchctl load ~/Library/LaunchAgents/com.pete.frametv-rotate.plist
+
+  Uninstall:
+      launchctl unload ~/Library/LaunchAgents/com.pete.frametv-rotate.plist
+      rm ~/Library/LaunchAgents/com.pete.frametv-rotate.plist
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.pete.frametv-rotate</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/pete/.local/bin/uv</string>
+        <string>run</string>
+        <string>--project</string>
+        <string>{{REPO}}</string>
+        <string>python</string>
+        <string>{{REPO}}/art.py</string>
+        <string>rotate</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>{{REPO}}</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>{{REPO}}/state/rotate.log</string>
+    <key>StandardErrorPath</key>
+    <string>{{REPO}}/state/rotate.log</string>
+</dict>
+</plist>
