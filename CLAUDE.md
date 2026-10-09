@@ -34,3 +34,13 @@ All config comes from `.env` at repo root (see `.env.example`). No tests, no lin
 ## Upstream
 
 `samsungtvws` (xchwarze/samsung-tv-ws-api) — `tv.art()` API for Frame TVs. v3.x token-file param is what enables persistent pairing.
+
+## Open issues (as of 2026-10-09)
+
+### `fetch` uses the retired Rijksmuseum API — likely broken
+`art.py` (`RIJKS_BASE`, `cmd_fetch`) still calls `https://www.rijksmuseum.nl/api/nl/collection` with `RIJKS_API_KEY`. Upstream reports that REST API is retired. `rotate` and `status` don't touch it and still work. Not yet confirmed by running `fetch`.
+
+**Fix plan:** port upstream's keyless flow to Python in `cmd_fetch`: Search API → Linked Art JSON-LD → IIIF image URL. Reference implementation: upstream commit `1d12ed6`, file `rijksmuseum/index.js` (`git show 1d12ed6:rijksmuseum/index.js`; `upstream` remote = mmargauxx/frametv). Then drop `RIJKS_API_KEY` from `Config` and `.env.example`. Optional: upstream's web picker (`rijksmuseum/server.js` + `public/`) as a later `art.py serve` subcommand.
+
+### Upstream divergence
+`origin` = peterbaker/frametv (fork), `upstream` = mmargauxx/frametv. Upstream `main` was merged with `-s ours` on 2026-10-09: its history is in, its file changes are not. Its 2022+/2024 Frame TV fix (`3668727`) was skipped deliberately — this TV is a 2021 QN65LS03AAFXZA. Revisit if the TV is replaced.
